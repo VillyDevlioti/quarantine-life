@@ -1,0 +1,13 @@
+
+  .container-fluid {
+    margin: 1% 2%;
+    padding: 0.15rem;
+    border: 5px solid white;
+    border-radius: 15px;
+  }
+
+  .card-body {
+    background: linear-gradient(90deg, rgba(31,31,190,1) 0%, rgba(0,212,255,1) 100%);
+    border-radius: inherit;
+    color: white;
+  }
