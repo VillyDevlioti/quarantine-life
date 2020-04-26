@@ -2,16 +2,19 @@ import React, { Component } from 'react';
 //import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css';
 import Header from "./Components/Header/Header";
-
-/*
-import ElectionHome from "./components/ElectionHome/ElectionHome";
-import Quiz from "./components/Quiz/Quiz";
-import Login from "./components/Login/Login";
-import Mainpage from "./components/Mainpage/Mainpage";
-import Signup from "./components/Signup/Signup";
-import pageData from "./pageData"; */
+import TwitterCard from "./Components/TwitterCard/TwitterCard";
+//import Wrapper from "./Components/Wrapper/Wrapper";
+//import axios from 'axios';
 
 class App extends Component {
+
+  state = {
+    tweets: []
+  };
+
+  retrieveTweets = tweets => {
+
+  }
   render() {
     return (
       
@@ -27,8 +30,15 @@ class App extends Component {
           </Switch>
           </div>
       </Router> */
+      <div>
       <Header />
+      <TwitterCard />
+      {console.log(process.env.REACT_APP_TWITTER_CONSUMER_KEY)}
+      </div>
       
-    )}}
+      
+    )
+  }
+}
 
 export default App;

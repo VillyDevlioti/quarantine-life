@@ -2,9 +2,15 @@ import React from "react";
 import "./TwitterCard.css";
 
 
-const TwitterCard = () => (
-    <div class="card">
-  </div>
+const TwitterCard = props => (
+    <div className="card">
+        <div className="card-body">
+            <h1>card 1</h1>
+        </div>
+    </div>
 );
 
 export default TwitterCard;
+
+//        <img alt={props.name} src={props.image} id={props.id}
+//onClick={() => props.checkForClicks(props.id)} className='checkForClicks'/>
