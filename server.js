@@ -31,7 +31,6 @@ app.use(express.static("public"));
 var mongoDB = process.env.REACT_APP_MONGODB_LOCAL;
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 var db = mongoose.connection;
-console.log("db", db);
 db.on("error", console.error.bind(console, "MongoDB connection error"));
 
 
@@ -47,13 +46,14 @@ client.stream('statuses/filter', {track: '#QuarantineLife'}, function(stream) {
 
         }
         console.log("buffer",buffer);
+
+        //now write to the DB
+        tweetData.create(buffer, (err, found) => err ? console.log(err) : console.log(found))
     });
     stream.on('error', function(error) {
         throw error;
     });
 
-    //db.create(buffer, (err, found) => err ? console.log(err) : console.log(found))
-    //console.log(found);
 })
 
 app.get('/api/tweets', function (req, res) {
