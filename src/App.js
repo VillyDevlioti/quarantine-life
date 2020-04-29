@@ -3,40 +3,66 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from "./Components/Header/Header";
 import TwitterCard from "./Components/TwitterCard/TwitterCard";
-//import Wrapper from "./Components/Wrapper/Wrapper";
-//import axios from 'axios';
+import Wrapper from "./Components/Wrapper/Wrapper";
+import axios from 'axios';
 
 class App extends Component {
-
+  constructor(props)
+  super(props);
   state = {
-    tweets: []
+    text: '',
+    username: '',
+    profileImage: '',
+    screenName: '',
+    tweetURL: ''
   };
+}
+  
+  componentDidMount() {
+    this.callTwitterApi()
+      .then(res => {
+        console.log ("response",res)
+        //this.setState({ response: res})
+      })
+      .catch(err => console.log(err));
+  }
+  
+  callTwitterApi = async () => {
+    axios.get('/api/tweets')
+      .then(res => {
+        let tweets = res.data;
+        this.setState({ 
+          tweets
+        });
+        
+      })
+      console.log("state response", this.state);
+  }
 
+  handleSubmit = async e => {
+    e.preventDefault();
+    const response = await fetch('/api/world', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ post: this.state.post }),
+    });
+    const body = await response.text();
+    
+    this.setState({ responseToPost: body });
+  };
   retrieveTweets = tweets => {
 
   }
   render() {
     return (
-      
-/*       <Router>
-        <div>
-          <Switch>
-            <Route exact path="/" render={() => <Mainpage pageData={pageData}/>}/>
-            <Route exact path="/candidates" render={() => <Candidates pageData={pageData}/>}/>
-            <Route exact path="/electionhome/:id" render={() => <ElectionHome pageData={pageData}/>}/>
-            <Route exact path="/quiz" render={() => <Quiz pageData={pageData}/>}/>
-            <Route exact path="/login" render={() => <Login pageData={pageData}/>}/>
-            <Route exact path="/signup" render={() => <Signup pageData={pageData}/>}/>
-          </Switch>
-          </div>
-      </Router> */
       <div>
-      <Header />
-      <TwitterCard />
-      {console.log(process.env.REACT_APP_TWITTER_CONSUMER_KEY)}
+        <Wrapper>
+            <Header />
+            <TwitterCard />
+        </Wrapper>
       </div>
-      
-      
     )
   }
 }

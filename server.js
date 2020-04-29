@@ -1,13 +1,11 @@
 var express = require("express");
 var logger = require("morgan");
-var mongoose = require("mongoose");
-var axios = require("axios");
-var request = require('request');
+//var mongoose = require("mongoose");
 require('dotenv').config();
 var Twitter = require('twitter');
-//var mongoDB = "mongodb+srv://jeremygill:password123@factivismcluster-2ye5e.gcp.mongodb.net/membersdb?retryWrites=true&w=majority";
+var tweetData = require("./models/tweetModel.js");
 
-var PORT = 3001;
+var PORT = process.env.PORT || process.env.REACT_APP_PORT;
 var client = new Twitter({
     consumer_key: process.env.REACT_APP_TWITTER_CONSUMER_KEY,
     consumer_secret: process.env.REACT_APP_TWITTER_CONSUMER_SECRET,
@@ -35,35 +33,31 @@ app.use(express.static("public"));
 var db = mongoose.connection; */
 
 //db.on("error", console.error.bind(console, "MongoDB connection error"));
-
-//hit the api
-/* var options = {
-		'method': 'GET',
-		'url': 'https://api.twitter.com/1.1/statuses/user_timeline.json?q=QuarantineLife',
-		'headers': {
-				'Content-Type': 'application/json',
-                //'Authorization': 'OAuth oauth_consumer_key="QJ2uhV9Imkz7LGb18Bi6ZIiZr",oauth_token="112385571-ZkF5QqfaramarerBnjfGBQYdrJPBbQw1n2lRsi1Y",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1587860695",oauth_nonce="3URsbkRh3bH",oauth_version="1.0",oauth_signature="W2jCtgJrua8hribDYCqmFYIBmbU%3D"'
-                'Authorization': 'OAuth oauth_consumer_key="QJ2uhV9Imkz7LGb18Bi6ZIiZr",oauth_token="112385571-ZkF5QqfaramarerBnjfGBQYdrJPBbQw1n2lRsi1Y",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1587860695",oauth_nonce="3URsbkRh3bH",oauth_version="1.0",oauth_signature="W2jCtgJrua8hribDYCqmFYIBmbU%3D"'
-            }
-};
-
-request(options, function (error, response) { 
-		if (error) throw new Error(error);
-        console.log(response.body);
-        console.log(oauth_consumer_key);
-}); */
-
-client.stream('statuses/filter', {track: '#QuarantineLife'}, function(stream) {
-    stream.on('data', function(event) {
-      console.log(event.text);
-      console.log(event.user.name);
-      console.log(event.user.profile_image_url_https);
-      console.log("https://twitter.com/"+event.user.screen_name+"/status/"+event.id_str);
+  
+//put the data on the front end
+app.get("/api/tweets", function (req, res) {
+    console.log(req);
+    //create a stream with tweets by hitting the Twitter API
+    client.stream('statuses/filter', {track: '#QuarantineLife'}, function(stream) {
+        stream.on('data', function(event) {
+            tweetData = {
+                text: event.text,
+                username: event.user.name,
+                profileImage: event.user.profile_image_url_https,
+                screenName: event.user.screen_name,
+                tweetURL: "https://twitter.com/"+event.user.screen_name+"/status/"+event.id_str
+            }   
+            JSON.stringify(tweetData);
+            console.log(tweetData);
+        });
+        stream.on('error', function(error) {
+            throw error;
+        });
     });
-   
-    stream.on('error', function(error) {
-      throw error;
-    });
+    
+    const tweets = tweetData;
+    console.log(tweets);
+    res.send(tweets);
 });
 
 app.listen(PORT, function() {
