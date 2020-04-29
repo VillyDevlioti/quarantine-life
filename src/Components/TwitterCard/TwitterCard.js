@@ -5,11 +5,12 @@ import "./TwitterCard.css";
 const TwitterCard = props => (
     <div className="col-sm-4">
         <div className="card">
-            <div className="card-body">
-                <h1>card 1</h1>
+            <div className="card-body" data-text={props.text}>
+                <h3>{props.text}</h3>    
             </div>
         </div>
     </div>
+
 );
 
 export default TwitterCard;

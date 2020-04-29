@@ -10,6 +10,7 @@
     "bootstrap": "^4.4.1",
     "dotenv-webpack": "^1.7.0",
     "express": "^4.17.1",
+    "mongo": "^0.1.0",
     "mongoose": "^5.9.10",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.3",
@@ -42,6 +43,6 @@
   },
   "devDependencies": {
     "dotenv": "^8.2.0"
-  }, 
+  },
   "proxy": "http://localhost:3001"
 }
