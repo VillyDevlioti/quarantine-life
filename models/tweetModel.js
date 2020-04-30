@@ -29,7 +29,16 @@ var TweetSchema = new Schema ({
         type: Date, 
         required: true
     }
-})
+ }, 
+ 
+ //a capped collection so that it doesn't expand to eternity!
+     capped: 
+    { 
+        size: 10240000, 
+        max: 5, 
+        autoIndexId: true 
+    } 
+});
 
 var TweetData = mongoose.model("TweetData", TweetSchema);
 
