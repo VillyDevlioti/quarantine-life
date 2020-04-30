@@ -15,6 +15,7 @@ var client = new Twitter({
 
 //create a tweetData instance to store all the new tweets that come from the datastream 
 var buffer = new tweetData;
+var newestFirst = new tweetData;
 
 // Initialize Express
 var app = express();
@@ -38,22 +39,25 @@ db.on("error", console.error.bind(console, "MongoDB connection error"));
 //create a stream with tweets by hitting the Twitter API
 client.stream('statuses/filter', {track: '#QuarantineLife'}, function(stream) {
     stream.on('data', function(event) {
-        console.log(event);
+        console.log(event.created_at);
         buffer = {
             text: event.text,
             username: event.user.name,
             profileImage: event.user.profile_image_url_https,
             screenName: event.user.screen_name,
-            tweetURL: "https://twitter.com/"+event.user.screen_name+"/status/"+event.id_str 
+            tweetURL: "https://twitter.com/"+event.user.screen_name+"/status/"+event.id_str,
+            timestamp: new Date (event.created_at)
         }
         console.log("buffer",buffer);
 
         //now write to the DB
         tweetData.create(buffer, (err, found) => err ? console.log(err) : console.log(found))
 
-        //next steps
         //we want to keep the database short and sweet, so we gotta sort by timestamp
+        //db.orders.find().sort( { amount: -1 } )
+
         //and remove the oldest one
+        //check length with a counter
     });
     stream.on('error', function(error) {
         throw error;

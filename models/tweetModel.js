@@ -24,6 +24,10 @@ var TweetSchema = new Schema ({
     tweetURL: {
         type: String,
         required: true
+    },
+    timestamp: {
+        type: Date, 
+        required: true
     }
 })
 
