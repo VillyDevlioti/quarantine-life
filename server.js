@@ -48,11 +48,11 @@ client.stream('statuses/filter', {track: '#QuarantineLife'}, function(stream) {
             tweetURL: "https://twitter.com/"+event.user.screen_name+"/status/"+event.id_str,
             timestamp: new Date (event.created_at)
         }
-        console.log("buffer",buffer);
+        console.log("buffer:",buffer);
 
         //now write to the DB, so that we can push and add to the front end
         //note: the collection in the database is capped, in order to keep it manageable
-        tweetData.create(buffer, (err, found) => err ? console.log(err) : console.log(found))
+        tweetData.create(buffer, (err, found) => err ? console.log(err) : console.log("database entry:", found))
     });
     stream.on('error', function(error) {
         throw error;
@@ -62,10 +62,12 @@ client.stream('statuses/filter', {track: '#QuarantineLife'}, function(stream) {
 app.get('/api/tweets', function (req, res) {
    //this is where we get the data from the database and push it to the front end. 
    //we will call the DB through a simple find call
+   //to scale up we will be using change streams functionalities inherent to mongodb
+   //but for now calling axios on the front end every couple of seconds will do the trick!
     tweetData.findOne({}, [], { $orderby : { 'created_at' : -1 } }, function(err, post) {
-        console.log(post);
-        res.send(post);
-  });
+    console.log(post);
+    });
+    res.send(data);
 });
 
 //Listen to the node server
