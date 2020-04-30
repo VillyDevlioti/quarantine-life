@@ -62,6 +62,10 @@ client.stream('statuses/filter', {track: '#QuarantineLife'}, function(stream) {
 app.get('/api/tweets', function (req, res) {
    //this is where we get the data from the database and push it to the front end. 
    //we will call the DB through a simple find call
+    tweetData.findOne({}, [], { $orderby : { 'created_at' : -1 } }, function(err, post) {
+        console.log(post);
+        res.send(post);
+  });
 });
 
 //Listen to the node server
