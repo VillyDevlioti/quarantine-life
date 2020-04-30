@@ -30,8 +30,8 @@ var TweetSchema = new Schema ({
         required: true
     }
  }, 
- 
  //a capped collection so that it doesn't expand to eternity!
+ {
      capped: 
     { 
         size: 10240000, 

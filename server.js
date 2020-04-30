@@ -35,7 +35,8 @@ mongoose.connect(mongoDB,{ useNewUrlParser: true });
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error"));
 
-//create a stream with tweets by hitting the Twitter API
+//create a stream with tweets by hitting the Twitter API, this will run all the time, independently
+//in order to ensure a real time look and feel
 client.stream('statuses/filter', {track: '#QuarantineLife'}, function(stream) {
     stream.on('data', function(event) {
         console.log(event.created_at);
@@ -49,15 +50,9 @@ client.stream('statuses/filter', {track: '#QuarantineLife'}, function(stream) {
         }
         console.log("buffer",buffer);
 
-        //now write to the DB
+        //now write to the DB, so that we can push and add to the front end
+        //note: the collection in the database is capped, in order to keep it manageable
         tweetData.create(buffer, (err, found) => err ? console.log(err) : console.log(found))
-
-        //we want to keep the database short and sweet, so we gotta sort by timestamp
-        //newestFirst= tweetData.find().sort({ timestamp: -1 })
-        //console.log("sorted", newestFirst);
-
-        //and remove the oldest one
-        //check length with a counter
     });
     stream.on('error', function(error) {
         throw error;
@@ -65,7 +60,8 @@ client.stream('statuses/filter', {track: '#QuarantineLife'}, function(stream) {
 })
 
 app.get('/api/tweets', function (req, res) {
-    res.send(buffer);
+   //this is where we get the data from the database and push it to the front end. 
+   //we will call the DB through a simple find call
 });
 
 //Listen to the node server
