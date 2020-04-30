@@ -16,14 +16,17 @@ class App extends Component {
   };
   
   componentDidMount() {
-    this.callTwitterApi()
-      .then(res => {
-        //console.log ("response",res)
-        this.setState({res})
-      })
-      .catch(err => console.log(err));
+    //Initializing stuff
+    this.callTwitterApi();
+    //we gonna be calling the api every x seconds... for now
+    //ok not ideal, BUT it's after midnight and I can't be setting up a replica set on
+    //mongo right now, maybe later... let me put it on the README file
+    this.interval = setInterval(() => {
+        this.callTwitterApi();
+    }, 4000);
   }
   
+  //this is our connection to the back end!
   callTwitterApi = async () => {
     axios.get('/api/tweets')
       .then(res => {
@@ -38,6 +41,10 @@ class App extends Component {
         }); 
       })
   }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+   }
 
   render() {
     return (

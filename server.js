@@ -65,9 +65,9 @@ app.get('/api/tweets', function (req, res) {
    //to scale up we will be using change streams functionalities inherent to mongodb
    //but for now calling axios on the front end every couple of seconds will do the trick!
     tweetData.findOne({}, [], { $orderby : { 'created_at' : -1 } }, function(err, post) {
-    console.log(post);
+        console.log(post);
+        res.send(post);
     });
-    res.send(data);
 });
 
 //Listen to the node server

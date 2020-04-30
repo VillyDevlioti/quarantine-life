@@ -26,6 +26,7 @@ Tehcnologies used
 Future expansions
 - Add support for user input, so that users can lookup the hashtag/keyword they please
 - add geolocation - potentially use mapbox
+- Create a replica set for mongoDB, in order to stop calling the api every x seconds on the front end.
 
 # Log
 
