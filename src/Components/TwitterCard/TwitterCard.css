@@ -1,0 +1,26 @@
+.twitter-card {
+    border-radius: 2px;
+    width: auto;
+    height: 250px;
+    position: relative;
+    box-shadow: 0 3px 6px #999;   
+    overflow: hidden;
+    justify-content: space-between;
+    margin: 1% 2%;
+    padding: 0.15rem;
+    border: 5px solid white;
+    border-radius: 15px;
+}
+
+.twitter-card img:hover  {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+
+}
+
+.twitter-card-body {
+    border-radius: inherit;
+    color: white;
+}

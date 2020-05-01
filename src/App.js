@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./Components/Header/Header";
 import TwitterCard from "./Components/TwitterCard/TwitterCard";
 import Wrapper from "./Components/Wrapper/Wrapper";
@@ -10,11 +9,11 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: [],
-      username: [],
-      profileImage: [],
-      screenName: [],
-      tweetURL: []
+      text: "",
+      username: "",
+      profileImage: "",
+      screenName: "",
+      tweetURL: ""
     };
   }
 
@@ -26,7 +25,7 @@ class App extends Component {
     //mongo right now, maybe later... let me put it on the README file
     this.interval = setInterval(() => {
         this.callTwitterApi();
-    }, 3000);
+    }, 5000);
   }
   
   //this is our connection to the back end!
@@ -34,7 +33,18 @@ class App extends Component {
     axios.get('/api/tweets')
       .then(res => {
         console.log("res.data", res.data);
-        this.setState(res.data);
+        this.setState({
+          text: res.data.text,
+          username: res.data.username,
+          profileImage: res.data.profileImage,
+          screenName: res.data.screenName,
+          tweetURL: res.data.tweetURL
+        });
+        console.log("text", this.state.text);
+        console.log("username", this.state.username);
+        console.log("profileImage", this.state.profileImage);
+        console.log("tweetURL", this.state.tweetURL);
+        
       })
   }
 
@@ -43,20 +53,14 @@ class App extends Component {
    }
 
   render() {
+    let tweet = this.state.text
     return (
       <div>
         <Wrapper>
             <Header>
-            {/*this.state.map(elements => (
-            <TwitterCard
-              data-text = {elements.text} key={this.state.toString()}
-            />
-            ))*/}
-          </Header>
+            </Header>
+              <TwitterCard text ={tweet} key={this.state._id}/>
         </Wrapper>
-        <div>
-            <p>{this.state.text}</p>;
-          </div>
       </div>
     )
   }
