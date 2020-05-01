@@ -7,14 +7,17 @@ import './App.css';
 import axios from 'axios';
 
 class App extends Component {
-  state = {
-    text: [],
-    username: '',
-    profileImage: '',
-    screenName: '',
-    tweetURL: ''
-  };
-  
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: [],
+      username: [],
+      profileImage: [],
+      screenName: [],
+      tweetURL: []
+    };
+  }
+
   componentDidMount() {
     //Initializing stuff
     this.callTwitterApi();
@@ -23,22 +26,15 @@ class App extends Component {
     //mongo right now, maybe later... let me put it on the README file
     this.interval = setInterval(() => {
         this.callTwitterApi();
-    }, 4000);
+    }, 3000);
   }
   
   //this is our connection to the back end!
   callTwitterApi = async () => {
     axios.get('/api/tweets')
       .then(res => {
-        let tweetsText = this.state.text;
         console.log("res.data", res.data);
-        tweetsText.push(res.data.text);
-        this.setState({
-          username: res.data.username,
-          profileImage: res.data.profileImage,
-          screenName: res.data.screenName,
-          tweetURL: res.data.tweetURL
-        }); 
+        this.setState(res.data);
       })
   }
 
@@ -51,13 +47,16 @@ class App extends Component {
       <div>
         <Wrapper>
             <Header>
-            {this.state.text.map(copy => (
+            {/*this.state.map(elements => (
             <TwitterCard
-              data-text = {copy} key={this.state.toString()}
+              data-text = {elements.text} key={this.state.toString()}
             />
-          ))}
+            ))*/}
           </Header>
         </Wrapper>
+        <div>
+            <p>{this.state.text}</p>;
+          </div>
       </div>
     )
   }
