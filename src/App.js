@@ -25,7 +25,7 @@ class App extends Component {
     //mongo right now, maybe later... let me put it on the README file
     this.interval = setInterval(() => {
         this.callTwitterApi();
-    }, 5000);
+    }, 2000);
   }
   
   //this is our connection to the back end!

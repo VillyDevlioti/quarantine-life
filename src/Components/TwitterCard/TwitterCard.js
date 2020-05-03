@@ -6,7 +6,7 @@ export default class TwitterCard extends Component {
     render () {
         let tweettext = this.props.text;
         return (
-            <div className="col-sm-4">
+            <div className="col-sm-6">
                 <div className="twitter-card">
                     <div className="twitter-card-body"> 
                         <h3>{tweettext}</h3>
