@@ -9,7 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: "",
+      text: [20],
       username: "",
       profileImage: "",
       screenName: "",
@@ -25,7 +25,7 @@ class App extends Component {
     //mongo right now, maybe later... let me put it on the README file
     this.interval = setInterval(() => {
         this.callTwitterApi();
-    }, 2000);
+    }, 3000);
   }
   
   //this is our connection to the back end!
@@ -34,12 +34,13 @@ class App extends Component {
       .then(res => {
         console.log("res.data", res.data);
         this.setState({
-          text: res.data.text,
+          //text: res.data.text,
           username: res.data.username,
           profileImage: res.data.profileImage,
           screenName: res.data.screenName,
           tweetURL: res.data.tweetURL
         });
+        this.state.text.push(res.data.text)
         console.log("text", this.state.text);
         console.log("username", this.state.username);
         console.log("profileImage", this.state.profileImage);
@@ -59,7 +60,9 @@ class App extends Component {
         <Wrapper>
             <Header>
             </Header>
-              <TwitterCard text ={tweet} key={this.state._id}/>
+            {this.state.text.map(tweet => (
+              <TwitterCard text ={tweet} key={this.state._id} />
+            ))}
         </Wrapper>
       </div>
     )
