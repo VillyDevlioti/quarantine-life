@@ -9,7 +9,11 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        tweets: []
+      text: [],
+      username: "",
+      profileImage: "",
+      screenName: "",
+      tweetURL: ""
     };
   }
 
@@ -29,8 +33,20 @@ class App extends Component {
     axios.get('/api/tweets')
       .then(res => {
           console.log("res.data", res.data);
-          this.state.tweets.push(res.data);
-          console.log("tweets table", this.state.tweets);
+          this.setState({
+            //text: res.data.text,
+            username: res.data.username,
+            profileImage: res.data.profileImage,
+            screenName: res.data.screenName,
+            tweetURL: res.data.tweetURL,
+            id: res.data._id
+          }); 
+        this.state.text.push(res.data.text);
+        console.log("text", this.state.text);
+        console.log("username", this.state.username);
+        console.log("profileImage", this.state.profileImage);
+        console.log("tweetURL", this.state.tweetURL);
+        console.log("id", this.state.id);
         });
   }
 
@@ -42,12 +58,13 @@ class App extends Component {
     return (
       <div className="App">
         <Wrapper>
-          <Header />
-          {this.state.tweets.map((element,i) => (
-            <TwitterCard text={element[i].text} username={element[i].username} image={element[i].profileImage} key={i} />
-            ))
-          }
-          </Wrapper>
+            <Header>
+            </Header>
+            {this.state.text.map((tweet,i) => (
+              <TwitterCard text={tweet} username={this.state.username} image={this.state.profileImage} key={i} />
+            )
+            )}
+        </Wrapper>
       </div>
     )
   }
