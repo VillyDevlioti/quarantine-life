@@ -9,11 +9,12 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: [20],
+      text: [],
       username: "",
       profileImage: "",
       screenName: "",
-      tweetURL: ""
+      tweetURL: "",
+      numberOfTweets: 0
     };
   }
 
@@ -25,28 +26,40 @@ class App extends Component {
     //mongo right now, maybe later... let me put it on the README file
     this.interval = setInterval(() => {
         this.callTwitterApi();
-    }, 3000);
+    }, 10000);
   }
   
+  refreshTweets = () => {
+    this.setState({
+      text: "",
+      username: "",
+      profileImage: "",
+      screenName: "",
+      tweetURL: "",
+      id: "",
+    });
+  }
+
   //this is our connection to the back end!
   callTwitterApi = async () => {
     axios.get('/api/tweets')
       .then(res => {
-        console.log("res.data", res.data);
-        this.setState({
-          //text: res.data.text,
-          username: res.data.username,
-          profileImage: res.data.profileImage,
-          screenName: res.data.screenName,
-          tweetURL: res.data.tweetURL
-        });
-        this.state.text.push(res.data.text)
+          console.log("res.data", res.data);
+          this.setState({
+            username: res.data.username,
+            profileImage: res.data.profileImage,
+            screenName: res.data.screenName,
+            tweetURL: res.data.tweetURL,
+            id: res.data._id
+          }); 
+        this.state.text.push(res.data.text);
+        console.log("count", this.state.numberOfTweets);
         console.log("text", this.state.text);
         console.log("username", this.state.username);
         console.log("profileImage", this.state.profileImage);
         console.log("tweetURL", this.state.tweetURL);
-        
-      })
+        console.log("id", this.state.id);
+        });
   }
 
   componentWillUnmount() {
@@ -54,14 +67,13 @@ class App extends Component {
    }
 
   render() {
-    let tweet = this.state.text
     return (
-      <div>
+      <div className="App">
         <Wrapper>
             <Header>
             </Header>
-            {this.state.text.map(tweet => (
-              <TwitterCard text ={tweet} key={this.state._id} />
+            {this.state.text.map((tweet,i) => (
+              <TwitterCard text={tweet} key={i} />
             ))}
         </Wrapper>
       </div>
