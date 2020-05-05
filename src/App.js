@@ -10,11 +10,10 @@ class App extends Component {
     super(props);
     this.state = {
       text: [],
-      username: "",
+      username: [],
       profileImage: "",
       screenName: "",
-      tweetURL: "",
-      numberOfTweets: 0
+      tweetURL: ""
     };
   }
 
@@ -27,17 +26,6 @@ class App extends Component {
     this.interval = setInterval(() => {
         this.callTwitterApi();
     }, 10000);
-  }
-  
-  refreshTweets = () => {
-    this.setState({
-      text: "",
-      username: "",
-      profileImage: "",
-      screenName: "",
-      tweetURL: "",
-      id: "",
-    });
   }
 
   //this is our connection to the back end!
@@ -53,7 +41,7 @@ class App extends Component {
             id: res.data._id
           }); 
         this.state.text.push(res.data.text);
-        console.log("count", this.state.numberOfTweets);
+        //this.state.username.push(res.data.username);
         console.log("text", this.state.text);
         console.log("username", this.state.username);
         console.log("profileImage", this.state.profileImage);
@@ -73,7 +61,7 @@ class App extends Component {
             <Header>
             </Header>
             {this.state.text.map((tweet,i) => (
-              <TwitterCard text={tweet} key={i} />
+              <TwitterCard text={tweet} username={this.state.username} image={this.state.profileImage} key={i} />
             ))}
         </Wrapper>
       </div>
