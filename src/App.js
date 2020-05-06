@@ -47,7 +47,8 @@ class App extends Component {
 
   render() {
     const stream = this.state.tweets.map((body,i) => (
-      <TwitterCard text={body.text} image={body.profileImage} screenName={body.screenName} alt={body.username} key={i}/>))
+      <TwitterCard text={body.text} image={body.profileImage} screenName={body.screenName} 
+      alt={body.username} url={body.tweetURL} key={i}/>))
     return (
       <div className="App">
         <Wrapper>

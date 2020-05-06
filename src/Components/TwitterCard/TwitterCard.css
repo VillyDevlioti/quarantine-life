@@ -20,7 +20,24 @@
 
 }
 
-.twitter-card-body {
+.twitter-card-body{
+    padding: 1rem;
     border-radius: inherit;
     color: white;
+    -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.twitter-card-body > h4 {
+    font-size: 16px;
+}
+
+.twitter-card-body > p {
+    font-size: 14px;
+}
+
+.twitter-card-body > a {
+    color: yellow;
 }
