@@ -23,6 +23,11 @@ Tehcnologies used
 - Node / npm 
 - MongoDB
 
+Libraries and Packages Used
+- Animate.css 
+- Axios
+- Twitter
+
 Future expansions
 - Add support for user input, so that users can lookup the hashtag/keyword they please
 - add geolocation - potentially use mapbox
@@ -31,3 +36,4 @@ Future expansions
 # Log
 
 - 04.30.2020: Works on localhost. My localhost. Not yours. 
+- 05.05.2020: First part of development is complete on localhost

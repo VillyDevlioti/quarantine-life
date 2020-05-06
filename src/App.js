@@ -10,7 +10,7 @@ class App extends Component {
     super(props);
     this.state = {
         tweets: [],
-        isLoading: true
+        isLoading: true,
     };
     this.callTwitterApi = this.callTwitterApi.bind(this);
   }
@@ -48,12 +48,15 @@ class App extends Component {
   render() {
     const stream = this.state.tweets.map((body,i) => (
       <TwitterCard text={body.text} image={body.profileImage} screenName={body.screenName} 
-      alt={body.username} url={body.tweetURL} key={i}/>))
+      alt={body.username} url={body.tweetURL} key={i}/>
+    ))
     return (
       <div className="App">
         <Wrapper>
           <Header />
-            { stream }
+
+              { stream }
+         
           </Wrapper>
       </div>
     )

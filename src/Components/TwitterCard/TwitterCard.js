@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {Animated} from "react-animated-css";
 import "./TwitterCard.css";
 
 
@@ -11,15 +12,17 @@ export default class TwitterCard extends Component {
         let url = this.props.url;
         return (
             <div className="col-sm-6">
-                <div className="twitter-card">
-                    <div className="twitter-card-body"> 
-                        <img src= {profileImg} alt={imageAlt} />
-                        <p>{screenName}</p>
-                        <h4>{tweetText}</h4>
-                        <br />
-                        <a href={url} target="_blank"><p>Link to tweet</p></a>
+                <Animated animationIn="fadeInUp" isVisible={true}> 
+                    <div className="twitter-card">
+                        <div className="twitter-card-body"> 
+                            <img src= {profileImg} alt={imageAlt} />
+                            <p>{screenName}</p>
+                            <h4>{tweetText}</h4>
+                            <br />
+                            <a href={url} target="_blank" rel="noopener noreferrer"><p>Link to tweet</p></a>
+                        </div>
                     </div>
-                </div>
+                </Animated>
             </div>
         )
     }
