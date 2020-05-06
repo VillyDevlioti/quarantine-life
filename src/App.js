@@ -9,11 +9,13 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        tweets: []
+        tweets: [],
+        isLoading: true
     };
+    this.callTwitterApi = this.callTwitterApi.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     //Initializing stuff
     this.callTwitterApi();
     //we gonna be calling the api every x seconds... for now
@@ -21,17 +23,22 @@ class App extends Component {
     //mongo right now, maybe later... let me put it on the README file
     this.interval = setInterval(() => {
         this.callTwitterApi();
-    }, 10000);
+    }, 10000); 
   }
 
   //this is our connection to the back end!
   callTwitterApi = async () => {
-    axios.get('/api/tweets')
+    await axios.get('/api/tweets')
       .then(res => {
           console.log("res.data", res.data);
           this.state.tweets.push(res.data);
+          this.setState({isLoading: false});
           console.log("tweets table", this.state.tweets);
+        })
+        .catch (error => {
+          this.setState({ error, isLoading: true });
         });
+        this.setState({isLoading: true});
   }
 
   componentWillUnmount() {
@@ -39,14 +46,13 @@ class App extends Component {
    }
 
   render() {
+    const stream = this.state.tweets.map((body,i) => (
+      <TwitterCard text={body.text} image={body.profileImage} screenName={body.screenName} alt={body.username} key={i}/>))
     return (
       <div className="App">
         <Wrapper>
           <Header />
-          {this.state.tweets.map((element,i) => (
-            <TwitterCard text={element[i].text} username={element[i].username} image={element[i].profileImage} key={i} />
-            ))
-          }
+            { stream }
           </Wrapper>
       </div>
     )

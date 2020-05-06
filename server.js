@@ -14,7 +14,7 @@ var client = new Twitter({
   });
 
 //create a tweetData instance to store all the new tweets that come from the datastream 
-var buffer = new tweetData;
+var buffer = new tweetData();
 
 // Initialize Express
 var app = express();
