@@ -46,5 +46,6 @@
   "devDependencies": {
     "dotenv": "^8.2.0"
   },
-  "proxy": "http://localhost:3001"
+  "proxy": "http://localhost:3001",
+  "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
 }
