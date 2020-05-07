@@ -30,7 +30,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 //Connect to mongo
-var mongoDB = process.env.REACT_APP_MONGODB_HEROKU;
+var mongoDB = process.env.REACT_APP_MONGODB_LIVE;
 mongoose.connect(mongoDB,{ useNewUrlParser: true });
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error"));

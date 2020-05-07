@@ -10,6 +10,7 @@
     "bootstrap": "^4.4.1",
     "dotenv-webpack": "^1.7.0",
     "express": "^4.17.1",
+    "gh-pages": "^2.2.0",
     "mongo": "^0.1.0",
     "mongoose": "^5.9.10",
     "morgan": "^1.10.0",
@@ -23,6 +24,8 @@
     "twitter": "^1.7.1"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -47,5 +50,5 @@
     "dotenv": "^8.2.0"
   },
   "proxy": "http://localhost:3001",
-  "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+  "homepage": "https://villydevlioti.github.io/quarantine-life/"
 }
