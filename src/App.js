@@ -18,10 +18,27 @@ class App extends Component {
 
   clearTweets = () => {
     this.setState({ 
-      tweets: [],
-      count: 0
+      tweets: [], //where API results are stored
+      count: 0, //tracking the number of tweets so that we can control the length of the pipeline
     });
-    console.log("tweets:", this.state.tweets, "count", this.state.count);
+  }
+
+  checkIfNew = (res) => {
+    //looping through the object to find the element in the table that has the same _id
+    //if the same _id is found, that means that there is no new tweet in the pipeline
+    let item = this.state.tweets.filter(item=>item._id.includes(res._id));
+    console.log(item);
+    if (item.length)
+    {    
+      console.log("no new tweets");
+    }
+    else {
+      this.state.tweets.unshift(res);
+      this.setState({
+        isLoading: false,
+        count: this.state.count+1
+    });
+    }
   }
 
   async componentDidMount() {
@@ -32,7 +49,7 @@ class App extends Component {
     //mongo right now, maybe later... let me put it on the README file
     this.interval = setInterval(() => {
         this.callTwitterApi();
-    }, 7000); 
+    }, 2000); 
   }
 
   //this is our connection to the back end!
@@ -40,21 +57,17 @@ class App extends Component {
     await axios.get('/api/tweets')
       .then(res => {
           console.log("res.data", res.data);
-          if (this.state.count === 5){
+          //pipeline length control
+          if (this.state.count === 5){ 
             this.clearTweets();
           }
-          this.state.tweets.unshift(res.data);
-          this.setState({
-            isLoading: false,
-            count: this.state.count+1
-          });
-          console.log("tweets table", this.state.tweets);
-          console.log("count", this.state.count);
-        })
-        .catch (error => {
-          this.setState({ error, isLoading: true });
-        });
-        this.setState({isLoading: true});
+          //checking if the tweet is new
+          this.checkIfNew(res.data);
+      })
+      .catch (error => {
+        this.setState({ error, isLoading: true });
+      });
+      this.setState({isLoading: true});
   }
 
   componentWillUnmount() {
