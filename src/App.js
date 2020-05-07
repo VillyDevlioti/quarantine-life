@@ -11,8 +11,17 @@ class App extends Component {
     this.state = {
         tweets: [],
         isLoading: true,
+        count: 0
     };
     this.callTwitterApi = this.callTwitterApi.bind(this);
+  }
+
+  clearTweets = () => {
+    this.setState({ 
+      tweets: [],
+      count: 0
+    });
+    console.log("tweets:", this.state.tweets, "count", this.state.count);
   }
 
   async componentDidMount() {
@@ -23,7 +32,7 @@ class App extends Component {
     //mongo right now, maybe later... let me put it on the README file
     this.interval = setInterval(() => {
         this.callTwitterApi();
-    }, 10000); 
+    }, 7000); 
   }
 
   //this is our connection to the back end!
@@ -31,9 +40,16 @@ class App extends Component {
     await axios.get('/api/tweets')
       .then(res => {
           console.log("res.data", res.data);
-          this.state.tweets.push(res.data);
-          this.setState({isLoading: false});
+          if (this.state.count === 5){
+            this.clearTweets();
+          }
+          this.state.tweets.unshift(res.data);
+          this.setState({
+            isLoading: false,
+            count: this.state.count+1
+          });
           console.log("tweets table", this.state.tweets);
+          console.log("count", this.state.count);
         })
         .catch (error => {
           this.setState({ error, isLoading: true });
@@ -48,7 +64,7 @@ class App extends Component {
   render() {
     const stream = this.state.tweets.map((body,i) => (
       <TwitterCard text={body.text} image={body.profileImage} screenName={body.screenName} 
-      alt={body.username} url={body.tweetURL} key={i}/>
+      alt={body.username} url={body.tweetURL} key={body.id}/>
     ))
     return (
       <div className="App">

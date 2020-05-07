@@ -12,7 +12,7 @@ export default class TwitterCard extends Component {
         let url = this.props.url;
         return (
             <div className="col-sm-6">
-                <Animated animationIn="fadeInUp" isVisible={true}> 
+                <Animated animationIn="zoomIn" isVisible={true}> 
                     <div className="twitter-card">
                         <div className="twitter-card-body"> 
                             <img src= {profileImg} alt={imageAlt} />
