@@ -11,6 +11,7 @@ class App extends Component {
     this.state = {
         tweets: [],
         isLoading: true,
+        isNew: "",
         count: 0
     };
     this.callTwitterApi = this.callTwitterApi.bind(this);
@@ -25,9 +26,8 @@ class App extends Component {
 
   checkIfNew = (res) => {
     //looping through the object to find the element in the table that has the same _id
-    //if the same _id is found, that means that there is no new tweet in the pipeline
     let item = this.state.tweets.filter(item=>item._id.includes(res._id));
-    console.log(item);
+    //if the same _id is found, that means that there is no new tweet in the pipeline
     if (item.length)
     {    
       console.log("no new tweets");
@@ -36,6 +36,7 @@ class App extends Component {
       this.state.tweets.unshift(res);
       this.setState({
         isLoading: false,
+        isNew: "fadeInLeft", //if a tweet is new, then it needs an animation
         count: this.state.count+1
     });
     }
@@ -45,8 +46,6 @@ class App extends Component {
     //Initializing stuff
     this.callTwitterApi();
     //we gonna be calling the api every x seconds... for now
-    //ok not ideal, BUT it's after midnight and I can't be setting up a replica set on
-    //mongo right now, maybe later... let me put it on the README file
     this.interval = setInterval(() => {
         this.callTwitterApi();
     }, 2000); 
@@ -56,9 +55,8 @@ class App extends Component {
   callTwitterApi = async () => {
     await axios.get('/api/tweets')
       .then(res => {
-          console.log("res.data", res.data);
           //pipeline length control
-          if (this.state.count === 5){ 
+          if (this.state.count === 20){ 
             this.clearTweets();
           }
           //checking if the tweet is new
@@ -67,7 +65,7 @@ class App extends Component {
       .catch (error => {
         this.setState({ error, isLoading: true });
       });
-      this.setState({isLoading: true});
+      this.setState({isLoading: true, isNew: ""});
   }
 
   componentWillUnmount() {
@@ -77,7 +75,7 @@ class App extends Component {
   render() {
     const stream = this.state.tweets.map((body,i) => (
       <TwitterCard text={body.text} image={body.profileImage} screenName={body.screenName} 
-      alt={body.username} url={body.tweetURL} key={body.id}/>
+      alt={body.username} url={body.tweetURL} key={body._id} animation={this.state.isNew}/>
     ))
     return (
       <div className="App">
