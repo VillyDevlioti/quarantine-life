@@ -26,7 +26,9 @@
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "start": "react-scripts start",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server" : "node sever.js",
+    "client": "npm start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -47,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "concurrently": "^5.2.0",
     "dotenv": "^8.2.0"
   },
   "proxy": "http://localhost:3001",
