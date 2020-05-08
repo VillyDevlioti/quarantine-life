@@ -30,8 +30,6 @@ app.use(express.json());
 //delete if it doesn't work
 (process.env.NODE_ENV === "production") ? app.use(express.static("build")) : app.use(express.static("public"));
 
-app.get('*', function(req, res)
-
 //Connect to mongo
 var mongoDB = process.env.REACT_APP_MONGODB_HEROKU;
 mongoose.connect(mongoDB,{ useNewUrlParser: true });
@@ -62,7 +60,7 @@ client.stream('statuses/filter', {track: '#QuarantineLife'}, function(stream) {
     });
 })
 app.get('/', function(req, res){
-    res.redirect('/api/tweet');
+    res.redirect('/api/tweets');
  });
 
 app.get('/api/tweets', function (req, res) {

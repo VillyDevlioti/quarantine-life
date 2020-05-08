@@ -24,7 +24,7 @@
     "twitter": "^1.7.1"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -48,5 +48,5 @@
     "concurrently": "^5.2.0",
     "dotenv": "^8.2.0"
   },
-  "proxy": "https://quarantine-life.herokuapp.com"
+  "proxy": "http://localhost:3001"
 }
