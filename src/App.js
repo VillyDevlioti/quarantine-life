@@ -64,7 +64,7 @@ class App extends Component {
       })
       .catch (error => {
         this.setState({ error, isLoading: true });
-      });
+      })
       this.setState({isLoading: true, isNew: ""});
   }
 
