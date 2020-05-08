@@ -5,6 +5,8 @@ import Wrapper from "./Components/Wrapper/Wrapper";
 import './App.css';
 import axios from 'axios';
 
+axios.defaults.proxy.host = "http://quarantine-life.herokuapp.com"
+
 class App extends Component {
   constructor(props) {
     super(props);
