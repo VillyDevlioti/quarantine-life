@@ -53,7 +53,7 @@ class App extends Component {
 
   //this is our connection to the back end!
   callTwitterApi = async () => {
-    await axios.get('https://raw.githubusercontent.com/VillyDevlioti/quarantine-life/tweets')
+    await axios.get('https://villydevlioti.github.io/quarantine-life/api/tweets')
       .then(res => {
           //pipeline length control
           if (this.state.count === 20){ 
