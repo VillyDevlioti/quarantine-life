@@ -27,7 +27,11 @@ app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(express.static("build"));
+//delete if it doesn't work
+if (process.env.NODE_ENV === "production"){
+    app.use(express.static("client/build"));
+}
+app.use(express.static("public"));
 
 //Connect to mongo
 var mongoDB = process.env.REACT_APP_MONGODB_HEROKU;
