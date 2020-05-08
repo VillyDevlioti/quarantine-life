@@ -59,7 +59,7 @@ client.stream('statuses/filter', {track: '#QuarantineLife'}, function(stream) {
     });
 })
 
-app.get('https://villydevlioti.github.io/quarantine-life/api/tweets', function (req, res) {
+app.get('/api/tweets', function (req, res) {
    //this is where we get the data from the database and push it to the front end. 
    //we will call the DB through a simple find call
    //to scale up we will be using change streams functionalities inherent to mongodb
