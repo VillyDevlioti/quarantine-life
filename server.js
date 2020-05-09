@@ -4,6 +4,7 @@ var mongoose = require("mongoose");
 require('dotenv').config();
 var Twitter = require('twitter');
 var tweetData = require("./models/TweetModel.js");
+const proxy = require('http-proxy-middleware')
 
 //initializing Twitter client with .env variables
 var client = new Twitter({
@@ -19,6 +20,11 @@ var buffer = new tweetData();
 // Initialize Express
 var app = express();
 var PORT = process.env.PORT || process.env.REACT_APP_PORT;
+
+module.exports = function(app) {
+    // add other server routes to path array
+    app.use(proxy(['/api' ], { target: 'http://localhost:'+process.env.PORT }));
+} 
 
 // Middleware
 // Morgan logger logs requests
