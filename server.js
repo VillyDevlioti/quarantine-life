@@ -23,7 +23,7 @@ var PORT = process.env.PORT || process.env.REACT_APP_PORT;
 
 module.exports = function(app) {
     // add other server routes to path array
-    app.use(proxy(['/api' ], { target: 'https://quarantine-life.herokuapp.com/'+process.env.PORT }));
+    app.use(proxy(['/api' ], { target: 'http://localhost:'+process.env.PORT }));
 } 
 
 // Middleware
