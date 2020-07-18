@@ -19,7 +19,8 @@ var buffer = new tweetData();
 
 // Initialize Express
 var app = express();
-var PORT = process.env.PORT || process.env.REACT_APP_PORT;
+//var PORT = process.env.PORT || process.env.REACT_APP_PORT;
+var PORT = process.env.PORT || 80;
 
 module.exports = function(app) {
     // add other server routes to path array
