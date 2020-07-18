@@ -67,9 +67,9 @@ client.stream('statuses/filter', {track: '#JohnLewis'}, function(stream) {
     });
 })
 
-//app.get('/', function (req, res) {
-//    res.redirect('/api/tweets');
-//})
+app.get('/', function (req, res) {
+    res.redirect('/api/tweets');
+});
 
 app.get('/api/tweets', function (req, res) {
    //this is where we get the data from the database and push it to the front end. 
