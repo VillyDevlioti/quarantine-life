@@ -44,7 +44,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error"));
 
 //create a stream with tweets by hitting the Twitter API, this will run all the time, independently
 //in order to ensure a real time look and feel
-client.stream('statuses/filter', {track: '#QuarantineLife'}, function(stream) {
+client.stream('statuses/filter', {track: '#JohnLewis'}, function(stream) {
     stream.on('data', function(event) {
         console.log(event.created_at);
         buffer = {
@@ -66,9 +66,9 @@ client.stream('statuses/filter', {track: '#QuarantineLife'}, function(stream) {
     });
 })
 
-app.get('/', function (req, res) {
-    res.redirect('/api/tweets');
-})
+//app.get('/', function (req, res) {
+//    res.redirect('/api/tweets');
+//})
 
 app.get('/api/tweets', function (req, res) {
    //this is where we get the data from the database and push it to the front end. 
