@@ -53,7 +53,7 @@ class App extends Component {
 
   //this is our connection to the back end!
   callTwitterApi = async () => {
-    await axios.get('api/tweets')
+    await axios.get('https://tweet-streams.herokuapp.com/api/tweets')
       .then(res => {
         console.log("data: ",res.data)
           //pipeline length control
