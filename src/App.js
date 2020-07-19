@@ -44,6 +44,7 @@ class App extends Component {
 
   async componentDidMount() {
     //Initializing stuff
+    console.log("before api call");
     this.callTwitterApi();
     //we gonna be calling the api every x seconds... for now
     this.interval = setInterval(() => {
@@ -53,7 +54,7 @@ class App extends Component {
 
   //this is our connection to the back end!
   callTwitterApi = async () => {
-    await axios.get('api/tweets')
+    axios.get('api/tweets')
       .then(res => {
         console.log("data: ",res.data)
           //pipeline length control
