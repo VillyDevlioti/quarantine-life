@@ -5,8 +5,6 @@ import Wrapper from "./Components/Wrapper/Wrapper";
 import './App.css';
 import axios from 'axios';
 
-//axios.defaults.proxy.host = process.env.REACT_APP_BE_URL;
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -77,7 +75,7 @@ class App extends Component {
   render() {
     const stream = this.state.tweets.map((body,i) => (
       <TwitterCard text={body.text} image={body.profileImage} screenName={body.screenName} 
-      alt={body.username} url={body.tweetURL} key={body._id} animation={this.state.isNew}/>
+      alt={body.username} url={body.tweetURL} key={i} animation={this.state.isNew}/>
     ))
     return (
       <div className="App">
