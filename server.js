@@ -4,7 +4,7 @@ var mongoose = require("mongoose");
 require('dotenv').config();
 var Twitter = require('twitter');
 var tweetData = require("./models/TweetModel.js");
-const proxy = require('http-proxy-middleware');
+//const proxy = require('http-proxy-middleware');
 
 //initializing Twitter client with .env variables
 var client = new Twitter({
