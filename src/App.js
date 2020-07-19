@@ -19,7 +19,7 @@ class App extends Component {
 
   componentDidMount() {
     //Initializing stuff
-    this.callTwitterApi();
+    //this.callTwitterApi();
     //we gonna be calling the api every x seconds... for now
     this.interval = setInterval(() => {
         this.callTwitterApi();
