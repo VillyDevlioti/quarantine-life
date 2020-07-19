@@ -66,10 +66,6 @@ client.stream('statuses/filter', {track: '#COVID-19'}, function(stream) {
     });
 })
 
-app.get('/', function (req, res) {
-    res.redirect('/api/tweets');
-});    
-
 app.get('/api/tweets', function (req, res) {
    //this is where we get the data from the database and push it to the front end. 
    //we will call the DB through a simple find call
@@ -80,6 +76,10 @@ app.get('/api/tweets', function (req, res) {
         res.send(post);
     });
 });
+
+app.get('*', function (req, res) {
+    res.redirect('/api/tweets');
+});    
 
 //Listen to the node server
 app.listen(PORT, function() {
