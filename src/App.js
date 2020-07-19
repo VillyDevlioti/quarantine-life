@@ -42,7 +42,7 @@ class App extends Component {
     }
   }
 
-  async componentDidMount() {
+ componentDidMount() {
     //Initializing stuff
     this.callTwitterApi();
     //we gonna be calling the api every x seconds... for now
@@ -53,7 +53,7 @@ class App extends Component {
   }
 
   //this is our connection to the back end!
-  callTwitterApi = async () => {
+  callTwitterApi = () => {
     axios.get('api/tweets')
       .then(res => {
         console.log("data: ",res.data)
