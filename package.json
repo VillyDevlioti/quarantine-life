@@ -48,5 +48,6 @@
   "devDependencies": {
     "concurrently": "^5.2.0",
     "dotenv": "^8.2.0"
-  }
+  }, 
+  "proxy": "https://tweet-streams.herokuapp.com"
 }
