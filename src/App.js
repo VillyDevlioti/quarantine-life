@@ -44,10 +44,10 @@ class App extends Component {
 
   async componentDidMount() {
     //Initializing stuff
-    console.log("before api call");
     this.callTwitterApi();
     //we gonna be calling the api every x seconds... for now
     this.interval = setInterval(() => {
+        console.log("before api call");
         this.callTwitterApi();
     }, 2000); 
   }
