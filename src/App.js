@@ -17,6 +17,19 @@ class App extends Component {
     this.callTwitterApi = this.callTwitterApi.bind(this);
   }
 
+  componentDidMount() {
+    //Initializing stuff
+    this.callTwitterApi();
+    //we gonna be calling the api every x seconds... for now
+    this.interval = setInterval(() => {
+        this.callTwitterApi();
+    }, 2000); 
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+   }
+
   clearTweets = () => {
     this.setState({ 
       tweets: [], //where API results are stored
@@ -42,21 +55,11 @@ class App extends Component {
     }
   }
 
- componentDidMount() {
-    //Initializing stuff
-    this.callTwitterApi();
-    //we gonna be calling the api every x seconds... for now
-    this.interval = setInterval(() => {
-        console.log("before api call");
-        this.callTwitterApi();
-    }, 2000); 
-  }
-
   //this is our connection to the back end!
   callTwitterApi = () => {
     axios.get('api/tweets')
       .then(res => {
-        console.log("data: ",res.data)
+        console.log("data: ", res.data)
           //pipeline length control
           if (this.state.count === 20){ 
             this.clearTweets();
@@ -69,10 +72,6 @@ class App extends Component {
       })
       this.setState({isLoading: true, isNew: ""});
   }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-   }
 
   render() {
     const stream = this.state.tweets.map((body,i) => (
