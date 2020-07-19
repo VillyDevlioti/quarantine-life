@@ -53,8 +53,9 @@ class App extends Component {
 
   //this is our connection to the back end!
   callTwitterApi = async () => {
-    await axios.get('/api/tweets')
+    await axios.get('api/tweets')
       .then(res => {
+        console.log("data: ",res.data)
           //pipeline length control
           if (this.state.count === 20){ 
             this.clearTweets();
@@ -75,7 +76,7 @@ class App extends Component {
   render() {
     const stream = this.state.tweets.map((body,i) => (
       <TwitterCard text={body.text} image={body.profileImage} screenName={body.screenName} 
-      alt={body.username} url={body.tweetURL} key={i} animation={this.state.isNew}/>
+      alt={body.username} url={body.tweetURL} key={body._id} animation={this.state.isNew}/>
     ))
     return (
       <div className="App">
